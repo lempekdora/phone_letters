@@ -1,8 +1,9 @@
-package telephone;
-
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.lang.StringBuilder;
 
 public class Main {
 
@@ -11,22 +12,52 @@ public class Main {
         '6', "mno", '7', "pqrs", '8', "tuv", '9', "wxyz"
     );
 
-  public static void main(String[] args) {
-    Scanner readerObj = new Scanner(System.in);
-    System.out.println("Enter digits: ");
+    private static ArrayList<String> result = new ArrayList<String>();
 
-    String digits = readerObj.nextLine();  // Read user input
+    public static void main(String[] args) {
+        Scanner readerObj = new Scanner(System.in);
+        System.out.println("Enter digits: ");
 
-    ArrayList<String> letters = letters_to_digits(digits);
-    System.out.println(letters);
-  }
+        String digits = readerObj.nextLine();  // Read user input
 
-  private static ArrayList<String> letters_to_digits(String digits){
-    if (digits.length() > 0 & digits.length() <= 4 ){
-        
+        ArrayList<String> letters = letters_to_digits(digits);
+        System.out.println(letters);
+
+        readerObj.close();
     }
-    else{
-        return [];
+
+    private static ArrayList<String> letters_to_digits(String digits){
+        //checking constraints
+        if (digits == null || !digits.matches("^[2-9]{0,4}$")) {
+            return new ArrayList<String>();
+        }
+
+        StringBuilder sb = new StringBuilder("");
+
+        backtrack(digits, 0, sb);
+
+        result.sort( (a, b) -> { return -1 * a.compareTo(b); } ); //sort the results in reverse alphabetical order
+
+        return result;
     }
-  }
+
+    private static void backtrack(String digits, Integer index, StringBuilder current_path){
+        //base case
+        if (index == digits.length()){
+            result.add(current_path.toString());
+            return;
+        }
+
+        //recursion
+        Character current_digit = digits.charAt(index);
+        String letter_options = DIGIT_MAP.get(current_digit);
+
+        for(Character letter : letter_options.toCharArray()){
+            current_path.append(letter);
+
+            backtrack(digits, index + 1, current_path);
+
+            current_path.deleteCharAt(current_path.length() - 1);
+        }
+    }
 }
