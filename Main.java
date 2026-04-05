@@ -21,9 +21,9 @@ public class Main {
     System.out.println(letters);
   }
 
-  private ArrayList<String> letters_to_digits(String digits){
-    if (digits.length() > 0 and digits.length() <= 4 ){
-
+  private static ArrayList<String> letters_to_digits(String digits){
+    if (digits.length() > 0 & digits.length() <= 4 ){
+        
     }
     else{
         return [];
