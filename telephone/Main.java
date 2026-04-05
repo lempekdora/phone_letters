@@ -1,8 +1,8 @@
-import java.util.HashMap;
+package telephone;
+
 import java.util.Map;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.lang.StringBuilder;
 
 public class Main {
@@ -11,8 +11,6 @@ public class Main {
         '2', "abc", '3', "def", '4', "ghi", '5', "jkl", 
         '6', "mno", '7', "pqrs", '8', "tuv", '9', "wxyz"
     );
-
-    private static ArrayList<String> result = new ArrayList<String>();
 
     public static void main(String[] args) {
         Scanner readerObj = new Scanner(System.in);
@@ -26,22 +24,24 @@ public class Main {
         readerObj.close();
     }
 
-    private static ArrayList<String> letters_to_digits(String digits){
+    static ArrayList<String> letters_to_digits(String digits){  //package private
         //checking constraints
-        if (digits == null || !digits.matches("^[2-9]{0,4}$")) {
+        if (digits == null || digits.isEmpty() || !digits.matches("^[2-9]{0,4}$")) {
             return new ArrayList<String>();
         }
 
+        ArrayList<String> result = new ArrayList<String>();
+
         StringBuilder sb = new StringBuilder("");
 
-        backtrack(digits, 0, sb);
+        backtrack(digits, result, 0, sb);
 
         result.sort( (a, b) -> { return -1 * a.compareTo(b); } ); //sort the results in reverse alphabetical order
 
         return result;
     }
 
-    private static void backtrack(String digits, Integer index, StringBuilder current_path){
+    private static void backtrack(String digits, ArrayList<String> result, Integer index, StringBuilder current_path){
         //base case
         if (index == digits.length()){
             result.add(current_path.toString());
@@ -55,7 +55,7 @@ public class Main {
         for(Character letter : letter_options.toCharArray()){
             current_path.append(letter);
 
-            backtrack(digits, index + 1, current_path);
+            backtrack(digits, result, index + 1, current_path);
 
             current_path.deleteCharAt(current_path.length() - 1);
         }
