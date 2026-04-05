@@ -19,6 +19,8 @@ public class MainTest {
     @Test
     public void testEmptyInput(){
         assertEquals(new ArrayList<String>(), Main.letters_to_digits(""));
+
+        assertEquals(new ArrayList<String>(), Main.letters_to_digits(null));
     }
 
     @Test
@@ -47,7 +49,7 @@ public class MainTest {
     }
 
     @Test
-    void testComplexLenght(){
+    void testComplexLength(){
         List<String> result = Main.letters_to_digits("7979");
     
         assertEquals(256, result.size());
@@ -55,6 +57,10 @@ public class MainTest {
         List<String> result2 = Main.letters_to_digits("2222");
         
         assertEquals(81, result2.size());
+
+        List<String> result3 = Main.letters_to_digits("234");
+
+        assertEquals(27, result3.size());
     }
 
     @Test
@@ -64,7 +70,7 @@ public class MainTest {
         assertEquals("szsz", result.get(0));
 
         assertEquals("pwpw", result.get(255));
-        
+
 
         List<String> result2 = Main.letters_to_digits("2222");
 
@@ -84,5 +90,9 @@ public class MainTest {
         assertEquals(new ArrayList<String>(), Main.letters_to_digits("abc"));
 
         assertEquals(new ArrayList<String>(), Main.letters_to_digits("0"));
+
+        assertEquals(new ArrayList<String>(), Main.letters_to_digits(" 23"));
+        
+        assertEquals(new ArrayList<String>(), Main.letters_to_digits("2-3"));
     }
 }
